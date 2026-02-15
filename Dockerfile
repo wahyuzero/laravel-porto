@@ -40,8 +40,9 @@ RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 COPY docker/php.ini /usr/local/etc/php/conf.d/custom.ini
 COPY docker/www.conf /usr/local/etc/php-fpm.d/www.conf
 
-# Configure Nginx
+# Configure Nginx — remove Alpine defaults that conflict
 COPY docker/nginx.conf /etc/nginx/nginx.conf
+RUN rm -rf /etc/nginx/http.d/ /etc/nginx/conf.d/ && mkdir -p /run/nginx
 
 # Configure Supervisor
 COPY docker/supervisord.conf /etc/supervisord.conf
@@ -70,6 +71,9 @@ RUN php artisan config:clear \
     && php artisan view:clear
 
 EXPOSE 80
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s \
+    CMD curl -f http://localhost/ || exit 1
 
 # Entrypoint script
 COPY docker/entrypoint.sh /entrypoint.sh
