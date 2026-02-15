@@ -73,7 +73,7 @@ RUN php artisan config:clear \
 EXPOSE 80
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s \
-    CMD curl -f http://localhost/ || exit 1
+    CMD curl -f http://localhost/up || exit 1
 
 # Entrypoint script
 COPY docker/entrypoint.sh /entrypoint.sh

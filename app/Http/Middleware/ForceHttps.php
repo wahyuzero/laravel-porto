@@ -13,15 +13,15 @@ class ForceHttps
             return $next($request);
         }
 
-        // Trust reverse proxy headers (Coolify/Traefik/Nginx)
-        $isSecure = $request->isSecure()
-            || $request->header('X-Forwarded-Proto') === 'https'
-            || $request->header('X-Forwarded-Ssl') === 'on';
+        // Only redirect if request came through a reverse proxy AND is HTTP
+        // If no X-Forwarded-Proto header → internal request (healthcheck/direct) → skip
+        $proto = $request->header('X-Forwarded-Proto');
 
-        if (!$isSecure) {
+        if ($proto && $proto !== 'https') {
             return redirect()->secure($request->getRequestUri(), 301);
         }
 
         return $next($request);
     }
 }
+
