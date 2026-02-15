@@ -9,19 +9,28 @@ class ForceHttps
 {
     public function handle(Request $request, Closure $next)
     {
+        // Disabled by default — reverse proxies (Coolify/Traefik) handle HTTPS
+        // Set FORCE_HTTPS=true in .env only for direct (non-proxied) deployments
+        if (!config('app.force_https', false)) {
+            return $next($request);
+        }
+
         if (!app()->environment('production')) {
             return $next($request);
         }
 
-        // Only redirect if request came through a reverse proxy AND is HTTP
-        // If no X-Forwarded-Proto header → internal request (healthcheck/direct) → skip
         $proto = $request->header('X-Forwarded-Proto');
 
         if ($proto && $proto !== 'https') {
             return redirect()->secure($request->getRequestUri(), 301);
         }
 
+        if (!$proto && !$request->isSecure()) {
+            return redirect()->secure($request->getRequestUri(), 301);
+        }
+
         return $next($request);
     }
 }
+
 
