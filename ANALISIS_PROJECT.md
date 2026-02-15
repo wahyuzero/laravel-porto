@@ -142,14 +142,14 @@ status sebenarnya.
 | 4  | Character Limit    | ✅     | maxlength="500" di form                       |
 | 5  | Nickname Field     | ✅     | nickname field ada                            |
 | 6  | ASCII Art Preview  | ✅     | guestbook/index.blade.php:20-23, :41-42       |
-| 7  | Message Editing    | ❌     | Tidak ada fungsi edit message                 |
+| 7  | Message Editing    | ✅     | edit_token + /guestbook/edit/{token} route    |
 | 8  | Spam Detection     | ✅     | GuestBookController keyword filter            |
 | 9  | IP Display Toggle  | ✅     | Admin toggle show/hide IP column              |
 | 10 | Guest Website Link | ✅     | website URL field + clickable nickname        |
 | 11 | Reactions/Emojis   | ✅     | 👍❤️😄 client-side reactions via localStorage |
-| 12 | Message Threading  | ❌     | Tidak ada sistem reply                        |
+| 12 | Message Threading  | ✅     | parent_id FK + threaded replies with indent   |
 
-**Guestbook Status: 10/12 lengkap (83%)**
+**Guestbook Status: 12/12 lengkap (100%)**
 
 ---
 
@@ -165,10 +165,10 @@ status sebenarnya.
 | 6  | High Contrast Mode       | ✅     | [data-theme="highcontrast"] CSS vars                     |
 | 7  | Reduced Motion           | ✅     | public-layout.blade.php:104-111 (prefers-reduced-motion) |
 | 8  | Theme Preview            | ✅     | Color swatch preview (bg/fg/accent) on hover             |
-| 9  | Custom Theme Creator     | ❌     | Tidak ada theme builder                                  |
+| 9  | Custom Theme Creator     | ✅     | /theme-creator page (8 color pickers + presets + save)   |
 | 10 | Reset to Default         | ✅     | [reset] button in footer                                 |
 
-**Themes Status: 9/10 lengkap (90%)**
+**Themes Status: 10/10 lengkap (100%)**
 
 ---
 
@@ -188,7 +188,7 @@ status sebenarnya.
 | 10 | Rarity Display     | ✅     | Common/Rare/Legendary tooltip + color labels            |
 | 11 | Badge Hint System  | ✅     | public-layout.blade.php:759 (clue badge hidden)         |
 
-**Badges Status: 10/11 lengkap (91%)**
+**Badges Status: 11/11 lengkap (100%)**
 
 ---
 
@@ -325,23 +325,23 @@ status sebenarnya.
 
 ## Summary Statistik
 
-| Kategori      | Total Item | Ada     | Belum  | Persentase |
-| ------------- | ---------- | ------- | ------ | ---------- |
-| Blog System   | 28         | 28      | 0      | 100%       |
-| Projects      | 25         | 24      | 1      | 96%        |
-| Search        | 13         | 12      | 1      | 92%        |
-| Newsletter    | 13         | 10      | 3      | 77%        |
-| Guestbook     | 12         | 10      | 2      | 83%        |
-| Themes        | 10         | 9       | 1      | 90%        |
-| Badges        | 11         | 10      | 1      | 91%        |
-| SEO           | 7          | 7       | 0      | 100%       |
-| Error Pages   | 8          | 8       | 0      | 100%       |
-| Accessibility | 6          | 6       | 0      | 100%       |
-| Performance   | 5          | 5       | 0      | 100%       |
-| Security      | 8          | 8       | 0      | 100%       |
-| Analytics     | 10         | 10      | 0      | 100%       |
-| Admin Panel   | 24         | 24      | 0      | 100%       |
-| **TOTAL**     | **180**    | **170** | **10** | **94%**    |
+| Kategori      | Total Item | Ada     | Belum | Persentase |
+| ------------- | ---------- | ------- | ----- | ---------- |
+| Blog System   | 28         | 28      | 0     | 100%       |
+| Projects      | 25         | 24      | 1     | 96%        |
+| Search        | 13         | 12      | 1     | 92%        |
+| Newsletter    | 13         | 10      | 3     | 77%        |
+| Guestbook     | 12         | 12      | 0     | 100%       |
+| Themes        | 10         | 10      | 0     | 100%       |
+| Badges        | 11         | 11      | 0     | 100%       |
+| SEO           | 7          | 7       | 0     | 100%       |
+| Error Pages   | 8          | 8       | 0     | 100%       |
+| Accessibility | 6          | 6       | 0     | 100%       |
+| Performance   | 5          | 5       | 0     | 100%       |
+| Security      | 8          | 8       | 0     | 100%       |
+| Analytics     | 10         | 10      | 0     | 100%       |
+| Admin Panel   | 24         | 24      | 0     | 100%       |
+| **TOTAL**     | **180**    | **174** | **6** | **97%**    |
 
 ---
 

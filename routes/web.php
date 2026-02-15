@@ -46,10 +46,15 @@ Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
 Route::get('/search', [SearchController::class, 'index'])->name('search');
 Route::get('/search/autocomplete', [SearchController::class, 'autocomplete'])->name('search.autocomplete');
 Route::get('/guestbook', [GuestBookController::class, 'index'])->name('guestbook.index');
+Route::get('/guestbook/edit/{token}', [GuestBookController::class, 'edit'])->name('guestbook.edit');
+Route::put('/guestbook/edit/{token}', [GuestBookController::class, 'update'])->name('guestbook.update');
 Route::get('/changelog', [ChangelogController::class, 'index'])->name('changelog.index');
 Route::get('/badges', function () {
     return view('badges');
 })->name('badges');
+Route::get('/theme-creator', function () {
+    return view('theme-creator');
+})->name('theme-creator');
 Route::get('/.plan', [PlanController::class, 'show'])->name('plan');
 
 // Rate-limited form submissions
