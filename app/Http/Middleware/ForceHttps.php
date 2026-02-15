@@ -9,7 +9,16 @@ class ForceHttps
 {
     public function handle(Request $request, Closure $next)
     {
-        if (app()->environment('production') && !$request->isSecure()) {
+        if (!app()->environment('production')) {
+            return $next($request);
+        }
+
+        // Trust reverse proxy headers (Coolify/Traefik/Nginx)
+        $isSecure = $request->isSecure()
+            || $request->header('X-Forwarded-Proto') === 'https'
+            || $request->header('X-Forwarded-Ssl') === 'on';
+
+        if (!$isSecure) {
             return redirect()->secure($request->getRequestUri(), 301);
         }
 
