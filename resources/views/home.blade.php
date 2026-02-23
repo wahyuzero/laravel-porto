@@ -1,5 +1,8 @@
 <x-public-layout pageTitle="FrugalDev" metaDescription="FrugalDev — Full Stack Developer. Build more. Bloat less.">
 
+    <h1 style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden">FrugalDev — Full Stack Developer
+        Portfolio</h1>
+
     <pre class="mono" style="color:var(--green);font-size:10px;line-height:1.3;margin-bottom:16px">
  ___                       _ ___
 |  _|_ _ _ _ ___ ___| |  _ ___ _ _
@@ -91,7 +94,9 @@
     <div class="ascii-hr">═══ QUICK STATS ═══</div>
 
     <div class="mono" style="font-size:12px">
-        <div>uptime : {{ \Carbon\Carbon::parse(\App\Models\SiteSetting::get('site_created_at', '2026-02-12'))->diffForHumans(null, true) }}</div>
+        <div>uptime :
+            {{ \Carbon\Carbon::parse(\App\Models\SiteSetting::get('site_created_at', '2026-02-12'))->diffForHumans(null, true) }}
+        </div>
         <div>projects : {{ \App\Models\Project::visible()->count() }}</div>
         <div>blog_posts : {{ \App\Models\BlogPost::published()->count() }}</div>
         <div>skills_listed : {{ \App\Models\Skill::visible()->count() }}</div>

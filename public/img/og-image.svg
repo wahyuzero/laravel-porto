@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0d1117"/>
+      <stop offset="100%" style="stop-color:#161b22"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <!-- Border -->
+  <rect x="20" y="20" width="1160" height="590" rx="6" fill="none" stroke="#30363d" stroke-width="2"/>
+  <!-- Terminal bar -->
+  <rect x="20" y="20" width="1160" height="40" rx="6" fill="#21262d"/>
+  <rect x="20" y="54" width="1160" height="6" fill="#21262d"/>
+  <circle cx="50" cy="40" r="6" fill="#f85149"/>
+  <circle cx="72" cy="40" r="6" fill="#d29922"/>
+  <circle cx="94" cy="40" r="6" fill="#3fb950"/>
+  <text x="600" y="44" font-family="monospace" font-size="13" fill="#8b949e" text-anchor="middle">frugaldev — bash — 80×24</text>
+  <!-- Prompt -->
+  <text x="60" y="140" font-family="monospace" font-size="16" fill="#8b949e">visitor@frugaldev:~$</text>
+  <text x="290" y="140" font-family="monospace" font-size="16" fill="#c9d1d9"> cat README.md</text>
+  <!-- Main title -->
+  <text x="600" y="270" font-family="monospace" font-size="72" fill="#3fb950" text-anchor="middle" font-weight="bold">FrugalDev</text>
+  <!-- Tagline -->
+  <text x="600" y="330" font-family="monospace" font-size="28" fill="#8b949e" text-anchor="middle">Build more. Bloat less.</text>
+  <!-- Separator -->
+  <line x1="300" y1="370" x2="900" y2="370" stroke="#30363d" stroke-width="1"/>
+  <!-- Description -->
+  <text x="600" y="420" font-family="monospace" font-size="18" fill="#58a6ff" text-anchor="middle">Full Stack Developer Portfolio</text>
+  <!-- Tech tags -->
+  <rect x="330" y="460" width="80" height="28" rx="4" fill="#1f6feb22" stroke="#1f6feb" stroke-width="1"/>
+  <text x="370" y="479" font-family="monospace" font-size="13" fill="#58a6ff" text-anchor="middle">Laravel</text>
+  <rect x="425" y="460" width="60" height="28" rx="4" fill="#1f6feb22" stroke="#1f6feb" stroke-width="1"/>
+  <text x="455" y="479" font-family="monospace" font-size="13" fill="#58a6ff" text-anchor="middle">PHP</text>
+  <rect x="500" y="460" width="60" height="28" rx="4" fill="#1f6feb22" stroke="#1f6feb" stroke-width="1"/>
+  <text x="530" y="479" font-family="monospace" font-size="13" fill="#58a6ff" text-anchor="middle">SQLite</text>
+  <rect x="575" y="460" width="70" height="28" rx="4" fill="#1f6feb22" stroke="#1f6feb" stroke-width="1"/>
+  <text x="610" y="479" font-family="monospace" font-size="13" fill="#58a6ff" text-anchor="middle">Docker</text>
+  <rect x="660" y="460" width="60" height="28" rx="4" fill="#1f6feb22" stroke="#1f6feb" stroke-width="1"/>
+  <text x="690" y="479" font-family="monospace" font-size="13" fill="#58a6ff" text-anchor="middle">Linux</text>
+  <rect x="735" y="460" width="40" height="28" rx="4" fill="#1f6feb22" stroke="#1f6feb" stroke-width="1"/>
+  <text x="755" y="479" font-family="monospace" font-size="13" fill="#58a6ff" text-anchor="middle">JS</text>
+  <rect x="790" y="460" width="80" height="28" rx="4" fill="#1f6feb22" stroke="#1f6feb" stroke-width="1"/>
+  <text x="830" y="479" font-family="monospace" font-size="13" fill="#58a6ff" text-anchor="middle">Python</text>
+  <!-- Bottom prompt -->
+  <text x="60" y="560" font-family="monospace" font-size="16" fill="#8b949e">visitor@frugaldev:~$</text>
+  <rect x="290" y="546" width="10" height="18" fill="#3fb950" opacity="0.8"/>
+</svg>

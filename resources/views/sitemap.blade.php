@@ -30,6 +30,26 @@
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
+    <url>
+        <loc>{{ url('/badges') }}</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.4</priority>
+    </url>
+    <url>
+        <loc>{{ url('/search') }}</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.3</priority>
+    </url>
+    <url>
+        <loc>{{ url('/theme-creator') }}</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.3</priority>
+    </url>
+    <url>
+        <loc>{{ url('/.plan') }}</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.3</priority>
+    </url>
     @foreach($projects as $project)
     <url>
         <loc>{{ url('/projects/' . $project->slug) }}</loc>

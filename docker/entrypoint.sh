@@ -37,6 +37,12 @@ php artisan config:cache
 php artisan route:cache
 php artisan view:cache
 
+# Generate OG image if not exists
+if [ ! -f public/img/og-image.png ]; then
+    echo "🖼️ Generating OG image..."
+    php artisan og:generate 2>/dev/null || true
+fi
+
 # Storage link
 echo "🔗 Creating storage link..."
 php artisan storage:link 2>/dev/null || true
