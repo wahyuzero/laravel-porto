@@ -79,12 +79,12 @@
                 {{-- Reactions --}}
                 <div class="gb-reactions" data-id="{{ $entry->id }}"
                     style="margin-top:4px;display:flex;gap:4px;align-items:center">
-                    <button onclick="gbReact({{ $entry->id }},'👍')" class="btn" style="font-size:10px;padding:1px 6px">👍
-                        <span class="rc">0</span></button>
-                    <button onclick="gbReact({{ $entry->id }},'❤️')" class="btn" style="font-size:10px;padding:1px 6px">❤️
-                        <span class="rc">0</span></button>
-                    <button onclick="gbReact({{ $entry->id }},'😄')" class="btn" style="font-size:10px;padding:1px 6px">😄
-                        <span class="rc">0</span></button>
+                    <button data-emoji="👍" onclick="gbReact({{ $entry->id }},'👍')" class="btn"
+                        style="font-size:10px;padding:1px 6px">👍 <span class="rc">0</span></button>
+                    <button data-emoji="❤️" onclick="gbReact({{ $entry->id }},'❤️')" class="btn"
+                        style="font-size:10px;padding:1px 6px">❤️ <span class="rc">0</span></button>
+                    <button data-emoji="😄" onclick="gbReact({{ $entry->id }},'😄')" class="btn"
+                        style="font-size:10px;padding:1px 6px">😄 <span class="rc">0</span></button>
                     <button onclick="toggleReply({{ $entry->id }})" class="btn"
                         style="font-size:10px;padding:1px 6px;margin-left:4px">↩ reply</button>
                     <span class="gb-edit-btn" data-id="{{ $entry->id }}" style="display:none">
@@ -179,11 +179,18 @@
             const data = JSON.parse(localStorage.getItem(key) || '{}');
             if (!data[id]) data[id] = {};
             const myKey = 'gb_my_' + id;
-            const myReacted = localStorage.getItem(myKey);
-            if (myReacted === emoji) return;
-            data[id][emoji] = (data[id][emoji] || 0) + 1;
+            const myReactions = JSON.parse(localStorage.getItem(myKey) || '[]');
+            if (myReactions.includes(emoji)) {
+                // Toggle off — remove reaction
+                data[id][emoji] = Math.max((data[id][emoji] || 1) - 1, 0);
+                myReactions.splice(myReactions.indexOf(emoji), 1);
+            } else {
+                // Add reaction
+                data[id][emoji] = (data[id][emoji] || 0) + 1;
+                myReactions.push(emoji);
+            }
             localStorage.setItem(key, JSON.stringify(data));
-            localStorage.setItem(myKey, emoji);
+            localStorage.setItem(myKey, JSON.stringify(myReactions));
             loadReactions();
         }
         function loadReactions() {
@@ -191,13 +198,13 @@
             document.querySelectorAll('.gb-reactions').forEach(container => {
                 const id = container.dataset.id;
                 const counts = data[id] || {};
-                const myEmoji = localStorage.getItem('gb_my_' + id);
-                container.querySelectorAll('button').forEach(btn => {
-                    const emoji = btn.textContent.trim().split(' ')[0];
+                const myReactions = JSON.parse(localStorage.getItem('gb_my_' + id) || '[]');
+                container.querySelectorAll('button[data-emoji]').forEach(btn => {
+                    const emoji = btn.dataset.emoji;
                     const count = counts[emoji] || 0;
                     const rc = btn.querySelector('.rc');
                     if (rc) rc.textContent = count;
-                    btn.style.borderColor = (emoji === myEmoji) ? 'var(--green)' : '';
+                    btn.style.borderColor = myReactions.includes(emoji) ? 'var(--green)' : '';
                 });
             });
         }

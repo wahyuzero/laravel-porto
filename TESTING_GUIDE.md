@@ -56,8 +56,10 @@ Buka setiap halaman dan pastikan load tanpa error.
 
 - [x] Form komentar muncul di bawah post ✅ _(with formatting toolbar: Bold,
       Italic, Code, Link, Quote, Emoji)_
-- [ ] Isi nickname, email, message → submit
-- [ ] Pesan sukses muncul: "Comment submitted for moderation"
+- [x] Isi nickname, email, message → submit ✅ _("QA Tester" / "qa@test.dev"
+      submitted)_
+- [x] Pesan sukses muncul: "✓ Comment submitted! It will appear after
+      moderation." ✅
 - [x] Comment yang sudah approved muncul di post ✅ _(14 comments seeded &
       approved)_
 
@@ -79,8 +81,9 @@ Buka setiap halaman dan pastikan load tanpa error.
 
 - [x] Klik tombol `↩ reply` di entry yang ada ✅ _(reply buttons visible on all
       entries)_
-- [ ] Form reply muncul inline (di bawah entry)
-- [ ] Submit reply → pesan sukses
+- [x] Form reply muncul inline (di bawah entry) ✅ _(nickname + reply textarea +
+      send/cancel)_
+- [x] Submit reply → pesan sukses ✅ _(reply queued for moderation)_
 - [x] Reply muncul indent di bawah parent entry (setelah approve) ✅ _(FrugalDev
       → ascii_artist)_
 
@@ -96,18 +99,18 @@ Buka setiap halaman dan pastikan load tanpa error.
 
 - [x] Klik emoji reaction (👍 ❤️ dll) di entry ✅ _(buttons present and
       clickable)_
-- [ ] Counter bertambah _(counter stayed at 0 — may need manual browser
-      session)_
+- [x] Counter bertambah ✅ _(❤️ counter increments on click)_
 - [ ] Refresh halaman → reaction tersimpan (localStorage)
 
 ---
 
 ## 4. Contact Form
 
-- [ ] Buka `/about` atau halaman contact
-- [ ] Isi form: name, email, message
-- [ ] Submit → pesan sukses: "Message sent!"
-- [ ] Coba submit spam (kosongkan field required) → validasi error
+- [x] Buka `/about` → contact form di section `═══ CONTACT ═══` ✅ _(4 fields:
+      name, email, subject, message)_
+- [x] Isi form: name, email, subject, message ✅ _("Test User" submitted)_
+- [x] Submit → pesan sukses: "✓ Message sent. I'll get back to you." ✅
+- [x] Coba submit spam (kosongkan field required) → HTML5 validation error ✅
 - [ ] Rate limit: submit 6x cepat → throttle error (429)
 
 ---
@@ -116,9 +119,10 @@ Buka setiap halaman dan pastikan load tanpa error.
 
 ### 5.1 Subscribe
 
-- [ ] Temukan form subscribe di footer/sidebar
-- [ ] Masukkan email → submit
-- [ ] Pesan sukses: "Please check your email to verify"
+- [x] Temukan form subscribe di footer ✅ _(email input + "join" button, global
+      footer)_
+- [x] Masukkan email → submit ✅ _("subscriber@test.dev" entered)_
+- [x] Pesan sukses: "✓ Almost done! Please verify your email..." ✅
 
 ### 5.2 Verify
 
@@ -139,9 +143,10 @@ Buka setiap halaman dan pastikan load tanpa error.
 
 - [x] Buka `/search` ✅
 - [x] Ketik query di search box → hasil muncul (posts, projects) ✅ _("Laravel"
-      → 2, "SQLite" → 2)_
-- [x] Autocomplete: ketik 3+ karakter → dropdown suggestion muncul ✅
-- [ ] Klik hasil → navigate ke halaman yang benar
+      → 2, "SQLite" → 2, "Budget Tracker" → 1)_
+- [x] Autocomplete: ketik 3+ karakter → dropdown suggestion + recent searches ✅
+- [x] Klik hasil → navigate ke halaman yang benar ✅ _(Budget Tracker CLI →
+      /projects/budget-tracker-cli)_
 - [x] Kosongkan search → pesan "No results" atau empty state ✅ _(grep-style
       error)_
 - [x] Command palette: tekan `Ctrl+K` → search modal muncul ✅ _(filters nav +
@@ -168,8 +173,10 @@ Buka setiap halaman dan pastikan load tanpa error.
 - [x] Ganti ke **Paper** theme → warna berubah ✅ _(light beige)_
 - [x] Ganti ke **Amber** theme → warna berubah ✅ _(black/yellow)_
 - [x] Ganti ke **Retro** → warna berubah ✅ _(dark blue/cyan)_
-- [ ] Refresh halaman → theme tetap tersimpan (localStorage)
-- [ ] **High Contrast** mode → kontras naik
+- [x] Refresh halaman → theme tetap tersimpan (localStorage) ✅ _(amber
+      persisted)_
+- [x] **High Contrast** mode → kontras naik ✅ _(yellow on black, high
+      visibility)_
 
 ### 8.2 Custom Theme Creator
 
@@ -192,8 +199,9 @@ Buka setiap halaman dan pastikan load tanpa error.
 
 ### 8.3 Theme Customization
 
-- [ ] Footer color pickers (bg/text/accent) berfungsi
-- [ ] Reset button mengembalikan ke default
+- [x] Footer `[customize]` link → navigates to `/theme-creator` ✅ _(updated
+      from inline pickers)_
+- [x] Reset button mengembalikan ke default ✅
 
 ### 8.4 Accessibility
 
@@ -498,9 +506,9 @@ Test setiap halaman public di berbagai ukuran layar:
 
 ## 32. Error Pages
 
-- [x] Kunjungi URL tidak ada: `/random-page-xyz` → custom 404 page ✅ _(HTTP
-      404, 36KB, bukan nginx default)_
-- [ ] Error page memiliki navigasi kembali ke homepage
+- [x] Kunjungi URL tidak ada: `/random-page-xyz` → custom 404 page ✅ _(ASCII
+      art + "FILE NOT FOUND")_
+- [x] Error page memiliki navigasi kembali ke homepage ✅ _([← home] link)_
 
 ---
 
