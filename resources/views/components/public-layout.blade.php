@@ -689,12 +689,7 @@
                     <span id="tpLabel" class="mono"></span>
                 </div>
                 <button onclick="switchTheme('retro');showToast('Theme reset')" style="background:none;border:none;color:var(--muted);cursor:pointer;font-family:var(--mono);font-size:10px">[reset]</button>
-                <button onclick="document.getElementById('themeCustomizer').style.display=document.getElementById('themeCustomizer').style.display==='none'?'flex':'none'" style="background:none;border:none;color:var(--muted);cursor:pointer;font-family:var(--mono);font-size:10px">[customize]</button>
-                <div id="themeCustomizer" style="display:none;gap:6px;margin-top:4px;align-items:center;font-size:10px">
-                    <label>bg<input type="color" id="cBg" onchange="customTheme('--bg',this.value)" style="width:20px;height:14px;border:none;padding:0;cursor:pointer"></label>
-                    <label>text<input type="color" id="cFg" onchange="customTheme('--text',this.value)" style="width:20px;height:14px;border:none;padding:0;cursor:pointer"></label>
-                    <label>accent<input type="color" id="cAc" onchange="customTheme('--accent',this.value)" style="width:20px;height:14px;border:none;padding:0;cursor:pointer"></label>
-                </div>
+                <a href="{{ route('theme-creator') }}" style="color:var(--muted);font-family:var(--mono);font-size:10px;text-decoration:none">[customize]</a>
                 </div>
                 <div>
                     <a href="{{ route('feed') }}">[rss]</a>
