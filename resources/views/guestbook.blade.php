@@ -174,18 +174,22 @@
         })();
 
         // Guestbook reactions (client-side)
+        function getMyReactions(id) {
+            const raw = localStorage.getItem('gb_my_' + id);
+            if (!raw) return [];
+            try { const parsed = JSON.parse(raw); return Array.isArray(parsed) ? parsed : [parsed]; }
+            catch (e) { return [raw]; } // old format: plain emoji string
+        }
         function gbReact(id, emoji) {
             const key = 'gb_reactions';
             const data = JSON.parse(localStorage.getItem(key) || '{}');
             if (!data[id]) data[id] = {};
             const myKey = 'gb_my_' + id;
-            const myReactions = JSON.parse(localStorage.getItem(myKey) || '[]');
+            const myReactions = getMyReactions(id);
             if (myReactions.includes(emoji)) {
-                // Toggle off — remove reaction
                 data[id][emoji] = Math.max((data[id][emoji] || 1) - 1, 0);
                 myReactions.splice(myReactions.indexOf(emoji), 1);
             } else {
-                // Add reaction
                 data[id][emoji] = (data[id][emoji] || 0) + 1;
                 myReactions.push(emoji);
             }
@@ -198,7 +202,7 @@
             document.querySelectorAll('.gb-reactions').forEach(container => {
                 const id = container.dataset.id;
                 const counts = data[id] || {};
-                const myReactions = JSON.parse(localStorage.getItem('gb_my_' + id) || '[]');
+                const myReactions = getMyReactions(id);
                 container.querySelectorAll('button[data-emoji]').forEach(btn => {
                     const emoji = btn.dataset.emoji;
                     const count = counts[emoji] || 0;
