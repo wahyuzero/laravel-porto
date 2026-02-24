@@ -77,14 +77,15 @@
                 @endif
 
                 {{-- Reactions --}}
+                @php $rc = $entry->reactions ?? []; @endphp
                 <div class="gb-reactions" data-id="{{ $entry->id }}"
                     style="margin-top:4px;display:flex;gap:4px;align-items:center">
                     <button data-emoji="👍" onclick="gbReact({{ $entry->id }},'👍')" class="btn"
-                        style="font-size:10px;padding:1px 6px">👍 <span class="rc">0</span></button>
+                        style="font-size:10px;padding:1px 6px">👍 <span class="rc">{{ $rc['👍'] ?? 0 }}</span></button>
                     <button data-emoji="❤️" onclick="gbReact({{ $entry->id }},'❤️')" class="btn"
-                        style="font-size:10px;padding:1px 6px">❤️ <span class="rc">0</span></button>
+                        style="font-size:10px;padding:1px 6px">❤️ <span class="rc">{{ $rc['❤️'] ?? 0 }}</span></button>
                     <button data-emoji="😄" onclick="gbReact({{ $entry->id }},'😄')" class="btn"
-                        style="font-size:10px;padding:1px 6px">😄 <span class="rc">0</span></button>
+                        style="font-size:10px;padding:1px 6px">😄 <span class="rc">{{ $rc['😄'] ?? 0 }}</span></button>
                     <button onclick="toggleReply({{ $entry->id }})" class="btn"
                         style="font-size:10px;padding:1px 6px;margin-left:4px">↩ reply</button>
                     <span class="gb-edit-btn" data-id="{{ $entry->id }}" style="display:none">
@@ -173,46 +174,30 @@
             });
         })();
 
-        // Guestbook reactions (client-side)
-        function getMyReactions(id) {
-            const raw = localStorage.getItem('gb_my_' + id);
-            if (!raw) return [];
-            try { const parsed = JSON.parse(raw); return Array.isArray(parsed) ? parsed : [parsed]; }
-            catch (e) { return [raw]; } // old format: plain emoji string
-        }
+        // Guestbook reactions (server-side via API)
         function gbReact(id, emoji) {
-            const key = 'gb_reactions';
-            const data = JSON.parse(localStorage.getItem(key) || '{}');
-            if (!data[id]) data[id] = {};
-            const myKey = 'gb_my_' + id;
-            const myReactions = getMyReactions(id);
-            if (myReactions.includes(emoji)) {
-                data[id][emoji] = Math.max((data[id][emoji] || 1) - 1, 0);
-                myReactions.splice(myReactions.indexOf(emoji), 1);
-            } else {
-                data[id][emoji] = (data[id][emoji] || 0) + 1;
-                myReactions.push(emoji);
-            }
-            localStorage.setItem(key, JSON.stringify(data));
-            localStorage.setItem(myKey, JSON.stringify(myReactions));
-            loadReactions();
-        }
-        function loadReactions() {
-            const data = JSON.parse(localStorage.getItem('gb_reactions') || '{}');
-            document.querySelectorAll('.gb-reactions').forEach(container => {
-                const id = container.dataset.id;
-                const counts = data[id] || {};
-                const myReactions = getMyReactions(id);
-                container.querySelectorAll('button[data-emoji]').forEach(btn => {
-                    const emoji = btn.dataset.emoji;
-                    const count = counts[emoji] || 0;
-                    const rc = btn.querySelector('.rc');
-                    if (rc) rc.textContent = count;
-                    btn.style.borderColor = myReactions.includes(emoji) ? 'var(--green)' : '';
+            const btn = document.querySelector(`.gb-reactions[data-id="${id}"] button[data-emoji="${emoji}"]`);
+            if (btn) btn.disabled = true;
+            fetch(`/guestbook/${id}/react`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}', 'Accept': 'application/json'},
+                body: JSON.stringify({emoji})
+            })
+            .then(r => r.json())
+            .then(data => {
+                // Update all counters for this entry
+                const container = document.querySelector(`.gb-reactions[data-id="${id}"]`);
+                if (!container) return;
+                container.querySelectorAll('button[data-emoji]').forEach(b => {
+                    const e = b.dataset.emoji;
+                    const rc = b.querySelector('.rc');
+                    if (rc) rc.textContent = data.counts[e] || 0;
+                    b.style.borderColor = data.myReactions.includes(e) ? 'var(--green)' : '';
+                    b.disabled = false;
                 });
-            });
+            })
+            .catch(() => { if (btn) btn.disabled = false; });
         }
-        loadReactions();
     </script>
 
 </x-public-layout>

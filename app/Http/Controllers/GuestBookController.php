@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\GuestBookEntry;
+use App\Models\GuestbookReaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -66,5 +67,54 @@ class GuestBookController extends Controller
         $entry->update($validated);
 
         return redirect()->route('guestbook.index')->with('success', 'Message updated successfully!');
+    }
+
+    public function react(Request $request, int $id)
+    {
+        $request->validate([
+            'emoji' => 'required|string|in:👍,❤️,😄',
+        ]);
+
+        $entry = GuestBookEntry::approved()->findOrFail($id);
+        $emoji = $request->input('emoji');
+        $ip = $request->ip();
+
+        // Toggle: if already reacted with this emoji, remove it
+        $existing = GuestbookReaction::where([
+            'guest_book_entry_id' => $id,
+            'emoji' => $emoji,
+            'ip_address' => $ip,
+        ])->first();
+
+        if ($existing) {
+            $existing->delete();
+        } else {
+            GuestbookReaction::create([
+                'guest_book_entry_id' => $id,
+                'emoji' => $emoji,
+                'ip_address' => $ip,
+            ]);
+        }
+
+        // Recalculate aggregate counts from the reactions table
+        $counts = GuestbookReaction::where('guest_book_entry_id', $id)
+            ->selectRaw('emoji, count(*) as total')
+            ->groupBy('emoji')
+            ->pluck('total', 'emoji')
+            ->toArray();
+
+        $entry->update(['reactions' => $counts]);
+
+        // Return user's active reactions for this entry
+        $myReactions = GuestbookReaction::where([
+            'guest_book_entry_id' => $id,
+            'ip_address' => $ip,
+        ])->pluck('emoji')->toArray();
+
+        return response()->json([
+            'counts' => $counts,
+            'myReactions' => $myReactions,
+            'toggled' => !$existing,
+        ]);
     }
 }

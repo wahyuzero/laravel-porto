@@ -64,6 +64,7 @@ Route::middleware('throttle:5,1')->group(function () {
     Route::post('/blog/{slug}/comments', [BlogController::class, 'storeComment'])->name('blog.comment');
     Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');
 });
+Route::post('/guestbook/{id}/react', [GuestBookController::class, 'react'])->name('guestbook.react')->middleware('throttle:30,1');
 
 // Newsletter verify/unsubscribe (no rate limit)
 Route::get('/newsletter/verify/{token}', [NewsletterController::class, 'verify'])->name('newsletter.verify');
